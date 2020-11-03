@@ -16,22 +16,17 @@
 set -e
 . "$STREAMPIPES_WORKDIR/bin/common"
 
-remove_container=false
-
-cli_help_restart() {
+cli_help_stop() {
   cat <<EOF
-Restart running StreamPipes containers
+Stop individual StreamPipes containers
 
-Usage: streampipes restart [OPTIONS] [SERVICE...]
-
-Options:
-  -f, --force-create   Remove container before restarting
+Usage: streampipes stop [SERVICE...]
 EOF
 
   exit 1
 }
 
-[ "$1" == '--help' ] || [ "$1" == '-h' ] && cli_help_restart
+[ "$1" == '--help' ] || [ "$1" == '-h' ] && cli_help_stop
 
 if [ -z "$1" ]; then
     fatal "Argument missing, see 'streampipes ${0##*/} --help'"
@@ -39,39 +34,15 @@ fi
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -f|--force-create) 
-          if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
-            remove_container=true
-            svc=$2
-            shift 2
-          else
-            fatal "Argument for $1 is missing" >&2
-          fi
-          ;;
         -*|--*=) fatal "Unsupported flag $1, see 'streampipes ${0##*/} --help'" >&2 ;;
         *) svc+=("$1"); shift ;;
     esac
 done
 
-remove_and_restart() {
-    info "Removing and restarting ${svc[*]}"
-    concatenate_compose_files
-    run "$docker_compose_files rm --stop -f ${svc[*]}"
-    run "$docker_compose_files up -d ${svc[*]}"
-}
-
-restart() {
-    info "Restarting ${svc[*]}"
-    concatenate_compose_files
-    run "$docker_compose_files restart ${svc[*]}"  
-}
-
 if is_streampipes_running; then
-    if [ "$remove_container" = true ]; then
-      remove_and_restart
-    else
-      restart
-    fi
+    info "Stopping ${svc[*]}"
+    concatenate_compose_files
+    run "$docker_compose_files stop ${svc[*]}"
 else
   info "No StreamPipes environment running"
 fi
