@@ -21,9 +21,7 @@ services:
       - "8600:8600"
     extra_hosts:
       - host.docker.internal:${HOST_DOCKER_INTERNAL}
-      - fog.fzi.de:${HOST_DOCKER_INTERNAL}
-      - edge-01.fzi.de:${HOST_DOCKER_INTERNAL}
-      - edge-02.fzi.de:${HOST_DOCKER_INTERNAL}
-      - cloud.fzi.de:${HOST_DOCKER_INTERNAL}
-      - fog.node:${HOST_DOCKER_INTERNAL}
-      - edge.node:${HOST_DOCKER_INTERNAL}
+      - fog01.example.de:${HOST_DOCKER_INTERNAL}
+      - edge01.example.de:${HOST_DOCKER_INTERNAL}
+      - edge02.example.de:${HOST_DOCKER_INTERNAL}
+      - cloud.example.de:${HOST_DOCKER_INTERNAL}
