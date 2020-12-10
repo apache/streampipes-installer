@@ -13,11 +13,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: streampipes
-spec:
-  backend:
-    serviceName: ui
-    servicePort: 80
+version: "3.4"
+services:
+  timescaledb:
+    image: timescale/timescaledb:1.7.4-pg12
+    ports:
+      - "5432:5432"
+    volumes:
+      - timescaledb:/var/lib/postgresql/data
+    environment:
+       POSTGRES_PASSWORD: timescalepw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    networks:
+      spnet:
+
+volumes:
+  timescaledb:
+
+networks:
+  spnet:
+    external: true

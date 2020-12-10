@@ -13,17 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-{{- if eq .Values.deployment "full" }}
-apiVersion: v1
-kind: Service
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
-  name: taskmanager
+  name: streampipes
 spec:
-  selector:
-    app: taskmanager
-  ports:
-    - name: main
-      protocol: TCP
-      port: 8099
-      targetPort: 8099
-{{- end }}
+  backend:
+    serviceName: ui
+    servicePort: 80
