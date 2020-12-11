@@ -13,13 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[environment:edge]
-activemq
-kafka
-consul
-zookeeper
-couchdb
-influxdb
-mosquitto
-mosquitto-cloud
-mosquitto-fog
+version: "3.4"
+services:
+  mosquitto-fog:
+    image: eclipse-mosquitto:1.6.12
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    networks:
+      spnet:
+
+networks:
+  spnet:
+    external: true
