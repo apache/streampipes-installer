@@ -13,14 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[environment:edge]
+[environment:edge-kafka]
 activemq
-kafka
+kafka-edge
+kafka-cloud
 consul
-zookeeper
 couchdb
 influxdb
-mosquitto
-mosquitto-cloud
-mosquitto-fog
-mosquitto-edge-2

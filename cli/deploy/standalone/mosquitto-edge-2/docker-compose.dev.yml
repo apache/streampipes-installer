@@ -13,14 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-[environment:edge]
-activemq
-kafka
-consul
-zookeeper
-couchdb
-influxdb
-mosquitto
-mosquitto-cloud
-mosquitto-fog
-mosquitto-edge-2
+version: "3.4"
+services:
+  mosquitto-edge-2:
+    ports:
+      - "1887:1883"

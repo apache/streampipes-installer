@@ -229,6 +229,7 @@ store_in_environment() {
 
 
 add_service() {
+  echo $svc_store_environment
   svc_dir=$STREAMPIPES_WORKDIR/deploy/standalone/${svc_name}
   create_dir $svc_dir
   create_docker_compose_files $svc_dir
