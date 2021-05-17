@@ -108,3 +108,31 @@ We'd love to hear your feedback! Subscribe to [users@streampipes.apache.org](mai
 
 ## License
 [Apache License 2.0](../LICENSE)
+
+## Troubleshooting
+### Some of the Deployments Never Reach 'Ready' State
+#### ui
+The UI Deployment specifies so-called init containers which wait for the following deployments:
+* backend
+* connect-master
+* consul
+* couchdb
+* activemq
+
+This means that when at least one of these deployments are not reachable the containers running the UI will not start up. Chances are when you fix the issues with the the others it will start up fine.
+
+#### backend
+##### Multi-Attach Error
+###### Problem
+`kubectl describe pod <backend-pod-name>` shows the following message:
+
+```Multi-Attach error for volume "pvc-xxx-xxx" Volume is already exclusively attached to one node and can't be attached to another```
+
+The issue is that the 'backend' Deployment and the 'pipeline-elements-all-jvm' are specified to use the same PersistentVolume. For this to be possible without restrictions, the used StorageClass (which defaults to your cluster 'default') needs to create PersistentVolumes which are set to "ReadWriteMany". This means that the same volume can be accessed by multiple Nodes of the Kubernetes cluster. 
+
+If you see this error then your 'default' StorageClass does not fulfill those requirements.
+
+###### Solution
+The easiest way would be to switch to a StorageClass which allows for "ReadWriteMany" if possible.
+
+If that is not possible assign the Pods of the two Deployments (backend and pipeline-elements-all-jvm) to be always deployed on the same Node. For one way to do so see the Kubernetes documentation (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/)
