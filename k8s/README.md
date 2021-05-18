@@ -135,4 +135,4 @@ If you see this error then your 'default' StorageClass does not fulfill those re
 ###### Solution
 The easiest way would be to switch to a StorageClass which allows for "ReadWriteMany" if possible.
 
-If that is not possible assign the Pods of the two Deployments (backend and pipeline-elements-all-jvm) to be always deployed on the same Node. For one way to do so see the Kubernetes documentation (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/)
+If that is not possible, assign the Pods of the two Deployments (backend and pipeline-elements-all-jvm) to be always deployed on the same Node. For one way to do so see the Kubernetes documentation (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/). **Be aware that this will decrease StreamPipes' built-in scalability and potentially its uptime. A single Kubernetes node has limited resources and cannot guarantee an uptime of 100%**
