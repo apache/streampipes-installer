@@ -119,7 +119,7 @@ The UI Deployment specifies so-called init containers which wait for the followi
 * couchdb
 * activemq
 
-This means that when at least one of these deployments are not reachable the containers running the UI will not start up. Chances are when you fix the issues with the the others it will start up fine.
+This means that when at least one of these deployments are not reachable the containers running the UI will not start up. Chances are when you fix the issues with the others it will start up fine.
 
 #### backend
 ##### Multi-Attach Error
