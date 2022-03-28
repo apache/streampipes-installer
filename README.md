@@ -16,6 +16,11 @@
   ~
   -->
 
+# Deprecated
+**The content of this repository was merged into the main repository  [StreamPipes Installer](https://github.com/apache/incubator-streampipes/tree/dev/installer)**
+
+
+
 # Apache StreamPipes (incubating) installer
 This project contains a variety of StreamPipes installation and operation options, namely:
 
